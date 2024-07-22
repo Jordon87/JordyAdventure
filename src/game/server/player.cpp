@@ -1238,7 +1238,9 @@ int CBasePlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 	int ftrivial;
 	float flRatio;
 	float flBonus;
+#ifndef JORDYADVENTURE
 	float flHealthPrev = m_iHealth;
+#endif
 
 	CTakeDamageInfo info = inputInfo;
 
@@ -1432,48 +1434,55 @@ int CBasePlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 		if (bitsDamage & DMG_CLUB)
 		{
+#ifndef JORDYADVENTURE
 			if (fmajor)
 				SetSuitUpdate("!HEV_DMG4", false, SUIT_NEXT_IN_30SEC);	// minor fracture
+#endif
 			bitsDamage &= ~DMG_CLUB;
 			ffound = true;
 		}
 		if (bitsDamage & (DMG_FALL | DMG_CRUSH))
 		{
+#ifndef JORDYADVENTURE
 			if (fmajor)
 				SetSuitUpdate("!HEV_DMG5", false, SUIT_NEXT_IN_30SEC);	// major fracture
 			else
 				SetSuitUpdate("!HEV_DMG4", false, SUIT_NEXT_IN_30SEC);	// minor fracture
-	
+#endif
 			bitsDamage &= ~(DMG_FALL | DMG_CRUSH);
 			ffound = true;
 		}
 		
 		if (bitsDamage & DMG_BULLET)
 		{
+#ifndef JORDYADVENTURE
 			if (m_lastDamageAmount > 5)
 				SetSuitUpdate("!HEV_DMG6", false, SUIT_NEXT_IN_30SEC);	// blood loss detected
 			//else
 			//	SetSuitUpdate("!HEV_DMG0", false, SUIT_NEXT_IN_30SEC);	// minor laceration
-			
+#endif
 			bitsDamage &= ~DMG_BULLET;
 			ffound = true;
 		}
 
 		if (bitsDamage & DMG_SLASH)
 		{
+#ifndef JORDYADVENTURE
 			if (fmajor)
 				SetSuitUpdate("!HEV_DMG1", false, SUIT_NEXT_IN_30SEC);	// major laceration
 			else
 				SetSuitUpdate("!HEV_DMG0", false, SUIT_NEXT_IN_30SEC);	// minor laceration
-
+#endif
 			bitsDamage &= ~DMG_SLASH;
 			ffound = true;
 		}
 		
 		if (bitsDamage & DMG_SONIC)
 		{
+#ifndef JORDYADVENTURE
 			if (fmajor)
 				SetSuitUpdate("!HEV_DMG2", false, SUIT_NEXT_IN_1MIN);	// internal bleeding
+#endif
 			bitsDamage &= ~DMG_SONIC;
 			ffound = true;
 		}
@@ -1487,28 +1496,36 @@ int CBasePlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 				m_rgbTimeBasedDamage[itbd_PoisonRecover] = 0;
 			}
 
+#ifndef JORDYADVENTURE
 			SetSuitUpdate("!HEV_DMG3", false, SUIT_NEXT_IN_1MIN);	// blood toxins detected
+#endif
 			bitsDamage &= ~( DMG_POISON | DMG_PARALYZE );
 			ffound = true;
 		}
 
 		if (bitsDamage & DMG_ACID)
 		{
+#ifndef JORDYADVENTURE
 			SetSuitUpdate("!HEV_DET1", false, SUIT_NEXT_IN_1MIN);	// hazardous chemicals detected
+#endif
 			bitsDamage &= ~DMG_ACID;
 			ffound = true;
 		}
 
 		if (bitsDamage & DMG_NERVEGAS)
 		{
+#ifndef JORDYADVENTURE
 			SetSuitUpdate("!HEV_DET0", false, SUIT_NEXT_IN_1MIN);	// biohazard detected
+#endif
 			bitsDamage &= ~DMG_NERVEGAS;
 			ffound = true;
 		}
 
 		if (bitsDamage & DMG_RADIATION)
 		{
+#ifndef JORDYADVENTURE
 			SetSuitUpdate("!HEV_DET2", false, SUIT_NEXT_IN_1MIN);	// radiation detected
+#endif
 			bitsDamage &= ~DMG_RADIATION;
 			ffound = true;
 		}
@@ -1531,6 +1548,7 @@ int CBasePlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 	m_Local.m_vecPunchAngle.SetX( flPunch );
 
+#ifndef JORDYADVENTURE
 	if (fTookDamage && !ftrivial && fmajor && flHealthPrev >= 75) 
 	{
 		// first time we take major damage...
@@ -1566,7 +1584,7 @@ int CBasePlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 			else
 				SetSuitUpdate("!HEV_HLTH1", false, SUIT_NEXT_IN_10MIN);	// health dropping
 		}
-
+#endif
 	// Do special explosion damage effect
 	if ( bitsDamage & DMG_BLAST )
 	{

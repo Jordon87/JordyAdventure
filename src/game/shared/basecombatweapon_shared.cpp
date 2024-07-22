@@ -2779,11 +2779,13 @@ void CBaseCombatWeapon::PrimaryAttack( void )
 
 	pPlayer->FireBullets( info );
 
+#ifndef JORDYADVENTURE
 	if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
 	{
 		// HEV suit - indicate out of ammo condition
 		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0); 
 	}
+#endif
 
 	//Add our view kick in
 	AddViewKick();
